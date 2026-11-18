@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise 💗</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffe4ef, #fff5f8, #f8c9dc);
+    font-family: Georgia, serif;
+    overflow: hidden;
+    color: #a64d70;
+}
+
+.card {
+    width: 90%;
+    max-width: 500px;
+    padding: 40px 25px;
+    text-align: center;
+    background: rgba(255,255,255,0.75);
+    border: 2px solid white;
+    border-radius: 30px;
+    box-shadow: 0 15px 50px #c77b9b35;
+    position: relative;
+    z-index: 2;
+}
+
+.small {
+    letter-spacing: 3px;
+    font-size: 12px;
+    color: #bd7895;
+}
+
+h1 {
+    font-size: 43px;
+    margin: 25px 0 15px;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.time-box {
+    background: #ffeaf2;
+    padding: 18px;
+    border-radius: 18px;
+    min-width: 90px;
+}
+
+.time-box span {
+    display: block;
+    font-size: 32px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+.time-box small {
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+button {
+    background: #d8759a;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:disabled {
+    background: #d8a8bb;
+    cursor: not-allowed;
+}
+
+.heart {
+    position: fixed;
+    top: -30px;
+    animation: fall 6s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 19px;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="small">A LITTLE SURPRISE FOR YOU ♡</div>
+
+    <h1>Hey Birthday Boy! 🎀</h1>
+
+    <p>
+        I know your birthday hasn't started yet...
+        <br>
+        But guess who couldn't wait? 🤭
+    </p>
+
+    <p style="margin-top:20px">
+        Your special day begins in...
+    </p>
+
+    <div class="timer">
+        <div class="time-box">
+            <span id="minutes">05</span>
+            <small>MINUTES</small>
+        </div>
+
+        <div class="time-box">
+            <span id="seconds">00</span>
+            <small>SECONDS</small>
+        </div>
+    </div>
+
+    <p id="tease">
+        Five minutes until you become one year more annoying. 😂
+    </p>
+
+    <button id="openBtn" disabled onclick="location.href='birthday.html'">
+        Not yet, impatient boy! 💗
+    </button>
+
+    <div id="message">
+        IT'S MIDNIGHT!! HAPPY BIRTHDAY!! 🎂💗
+    </div>
+
+</div>
+
+<script>
+
+// CHANGE THIS TO HIS BIRTHDAY
+// Format: YYYY-MM-DD
+const birthday = new Date("2026-12-04T00:00:00");
+
+const btn = document.getElementById("openBtn");
+const message = document.getElementById("message");
+
+function updateCountdown() {
+
+    const now = new Date();
+    const difference = birthday - now;
+
+    if (difference <= 0) {
+
+        document.getElementById("minutes").textContent = "00";
+        document.getElementById("seconds").textContent = "00";
+
+        btn.disabled = false;
+        btn.textContent = "OPEN YOUR BIRTHDAY SURPRISE ♡";
+
+        message.style.display = "block";
+
+        document.getElementById("tease").textContent =
+        "Okay okay, no more waiting. It's YOUR day! 🥹";
+
+        return;
+    }
+
+    const minutes = Math.floor(difference / 60000);
+    const seconds = Math.floor((difference % 60000) / 1000);
+
+    document.getElementById("minutes").textContent =
+        String(minutes).padStart(2, "0");
+
+    document.getElementById("seconds").textContent =
+        String(seconds).padStart(2, "0");
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Floating hearts
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+    heart.innerHTML = ["♡", "♥", "💕", "✦"][Math.floor(Math.random()*4)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random()*20) + "px";
+    heart.style.color = "#d8759a";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 500);
+
+</script>
+
+</body>
+</html>
